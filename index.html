@@ -27,13 +27,6 @@
             font-size: x-large;
             font-weight: bolder;
         }
-        .weekRect{
-            position: relative;
-            width: 10px;
-            height:10px;
-            float:left;
-            border: 1px solid #11aaff;
-        }
 
     </style>
 </head>
@@ -82,7 +75,7 @@
       .append('circle')
       .attr("class","weekCircle")
       .attr("r",2)
-      .attr("cx", d => xScale((d % 51) + 1))
+      .attr("cx", d => xScale((d % 51) + 2))
       .attr("cy", d => yScale(d % 91));
 
 
