@@ -60,7 +60,7 @@
 
   // -- ▼ DELETE FROM HERE ▼ --
 
-    var data = d3.range(1, 52*90);
+    var data = d3.range(0, 52*91);
   // illustrate content area dimensions (makes container g element grow accordingly)
 
   // illustrate left/right margins
@@ -82,8 +82,8 @@
       .append('circle')
       .attr("class","weekCircle")
       .attr("r",2)
-      .attr("cx", d => xScale((d % 52) + 1))
-      .attr("cy", d => yScale(d % 89));
+      .attr("cx", d => xScale((d % 51) + 1))
+      .attr("cy", d => yScale(d % 91));
 
 
 
