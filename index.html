@@ -62,11 +62,15 @@
 
     var data = d3.range(1, 52*90);
   // illustrate content area dimensions (makes container g element grow accordingly)
-  const rect = vis.data(data).enter()
-  .select("g")
-  .append('circle').attr("r",5)
-  .attr("class","weekRect")
-  .attr("cx", d => d*10);
+  // Daten zeichnen
+  vis.selectAll(".circle")
+      .data(data)
+      .enter()
+      .append('circle')
+      .attr("class","weekCircle")
+      .attr("r",5)
+      .attr("cx", d => d*20);
+
   // illustrate left/right margins
   const xScale = d3.scaleLinear()
     .domain([1, 52])
