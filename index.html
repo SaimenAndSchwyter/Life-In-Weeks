@@ -40,7 +40,7 @@
 <body>
 
 <h2>A scaffold for simple visualizations</h2>
-<svg width="800" height="500"></svg>
+<svg width="800" height="2000"></svg>
 
 <script src="https://d3js.org/d3.v4.js"></script>
 <script>
@@ -62,26 +62,30 @@
 
     var data = d3.range(1, 52*90);
   // illustrate content area dimensions (makes container g element grow accordingly)
+
+  // illustrate left/right margins
+  const xScale = d3.scaleLinear()
+      .domain([1, 52])
+      .range([0, width]);
+  vis.append("g").call(d3.axisTop(xScale));
+
+  // illustrate top/bottom margins
+  const yScale = d3.scaleLinear()
+      .domain([0, 90])
+      .range([0, height]);
+  vis.append("g").call(d3.axisLeft(yScale));
+
   // Daten zeichnen
   vis.selectAll(".circle")
       .data(data)
       .enter()
       .append('circle')
       .attr("class","weekCircle")
-      .attr("r",5)
-      .attr("cx", d => d*20);
+      .attr("r",2)
+      .attr("cx", d => xScale((d % 52) + 1))
+      .attr("cy", d => yScale(d % 89));
 
-  // illustrate left/right margins
-  const xScale = d3.scaleLinear()
-    .domain([1, 52])
-    .range([0, width]);
-  vis.append("g").call(d3.axisTop(xScale));
 
-  // illustrate top/bottom margins
-  const yScale = d3.scaleLinear()
-    .domain([0, 90])
-    .range([0, height]);
-  vis.append("g").call(d3.axisLeft(yScale));
 
   // Tip: name your selections and work with CSS classes
   const label = vis.append("g")
