@@ -15,7 +15,7 @@
         }
 
         svg {
-            background-color: steelblue;
+            background-color: transparent;
         }
 
         .content {
@@ -60,22 +60,26 @@
   const xScale = d3.scaleLinear()
       .domain([1, 52])
       .range([0, width]);
-  vis.append("g").call(d3.axisTop(xScale));
+  vis.append("g")
+      .call(d3.axisTop(xScale))
+      .attr("transform", "translate(0,-10)");
 
   // illustrate top/bottom margins
   const yScale = d3.scaleLinear()
-      .domain([-1, 90])
+      .domain([0, 90])
       .range([0, height]);
-  vis.append("g").call(d3.axisLeft(yScale));
+  vis.append("g")
+      .call(d3.axisLeft(yScale))
+      .attr("transform", "translate(-10,0)");
 
-  // Daten zeichnen
+  // draw array
   vis.selectAll(".circle")
       .data(data)
       .enter()
       .append('circle')
       .attr("class","weekCircle")
       .attr("r",2)
-      .attr("cx", d => xScale((d % 51) + 2))
+      .attr("cx", d => xScale((d % 51) + 1))
       .attr("cy", d => yScale(d % 91));
 
 
