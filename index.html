@@ -80,8 +80,8 @@
       .attr("class","weekCircle")
       .attr("id", d => d)
       .attr("r",2)
-      .attr("cx", d => xScale(1+(d % 52)));
-      //.attr("cy", d => yScale(d % 91 % 51));
+      .attr("cx", d => xScale(1+(d % 52)))
+      .attr("cy", d => yScale(Math.floor(d/53)));
 
 
 
