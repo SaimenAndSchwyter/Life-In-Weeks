@@ -52,8 +52,8 @@
   // delete it and replace it with your own visualization (by appending to `vis`)
 
   // -- ▼ DELETE FROM HERE ▼ --
-
-    var data = d3.range(0, 52*91);
+    // initialize array with all weeks in 90 years (+1 for inclusive)
+    var data = d3.range(1, (52*91)+1);
   // illustrate content area dimensions (makes container g element grow accordingly)
 
   // illustrate left/right margins
@@ -78,9 +78,10 @@
       .enter()
       .append('circle')
       .attr("class","weekCircle")
+      .attr("id", d => d)
       .attr("r",2)
-      .attr("cx", d => xScale((d % 51) + 1))
-      .attr("cy", d => yScale(d % 91));
+      .attr("cx", d => xScale(1+(d % 52)));
+      //.attr("cy", d => yScale(d % 91 % 51));
 
 
 
