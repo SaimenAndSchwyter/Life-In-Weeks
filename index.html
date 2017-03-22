@@ -62,20 +62,29 @@
   const years = d3.range(0,91);
   const cross = d3.cross(years,weeks);
 
-  // illustrate left/right margins
+  // make ticks on the x axis go from 1 to 52, while having a tick at 1, then 5, 10 etc.
+  const xTicks = d3.range(0,53,5);
+  xTicks[0] = 1;
+
+  // x Axis/Scale
   const xScale = d3.scaleLinear()
       .domain([1, 52])
       .range([0, width]);
+    d3.range(1,53,5)
+  const xAxis = d3.axisTop(xScale)
+      .tickValues(xTicks);
   vis.append("g")
-      .call(d3.axisTop(xScale))
+      .call(xAxis)
       .attr("transform", "translate(0,-10)");
 
-  // illustrate top/bottom margins
+  // y Axis/Scale
   const yScale = d3.scaleLinear()
       .domain([0, 90])
       .range([0, height]);
+  const yAxis = d3.axisLeft(yScale)
+      .ticks(90/5);
   vis.append("g")
-      .call(d3.axisLeft(yScale))
+      .call(yAxis)
       .attr("transform", "translate(-10,0)");
 
   // draw array
