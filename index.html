@@ -52,9 +52,15 @@
   // delete it and replace it with your own visualization (by appending to `vis`)
 
   // -- ▼ DELETE FROM HERE ▼ --
-    // initialize array with all weeks in 90 years (+1 for inclusive)
-    var data = d3.range(1, (52*91)+1);
-  // illustrate content area dimensions (makes container g element grow accordingly)
+
+  /* array with:
+  weeks (1 - 52 inclusive)
+  years (0 - 90 inclusive)
+  cross product in the form of: [0,1], [0,2] ... [0,52], [1, 1], [1, 2], ... [1,52] etc.
+  */
+  const weeks = d3.range(1,53);
+  const years = d3.range(0,91);
+  const cross = d3.cross(years,weeks);
 
   // illustrate left/right margins
   const xScale = d3.scaleLinear()
@@ -74,20 +80,16 @@
 
   // draw array
   vis.selectAll(".circle")
-      .data(data)
+      .data(cross)
       .enter()
       .append('circle')
       .attr("class","weekCircle")
-      .attr("id", d => d)
-      .attr("r",2)
-      .attr("cx", d => xScale(1+(d % 52)))
-      .attr("cy", d => yScale(Math.floor(d/53)));
-
-
-
-  // Tip: name your selections and work with CSS classes
-  const label = vis.append("g")
-    .attr("class", "label");
+      .attr("id", d => d[1] + "-" + d[0]) // week - year
+      .attr("r",4)
+      .attr("cx", d => xScale(d[1]))
+      .attr("cy", d => yScale(d[0]))
+      .attr("fill", "none")         // remove filling
+      .attr("stroke", "black");     // display outline
 
   // -- ▲ DELETE UNTIL HERE ▲ --
 
