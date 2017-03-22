@@ -86,8 +86,8 @@
       .attr("class","weekCircle")
       .attr("id", d => d[1] + "-" + d[0]) // week - year
       .attr("r",4)
-      .attr("cx", d => xScale(d[1]))
-      .attr("cy", d => yScale(d[0]))
+      .attr("cx", week => xScale(week[1]))
+      .attr("cy", year => yScale(year[0]))
       .attr("fill", "none")         // remove filling
       .attr("stroke", "black");     // display outline
 
