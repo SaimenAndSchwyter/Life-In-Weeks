@@ -101,19 +101,13 @@
       .attr("fill", "none")         // remove filling
       .attr("stroke", "black");     // display outline
 
+    
   // -- ▲ DELETE UNTIL HERE ▲ --
-function fillPath(start, duration,color){
-    var x=start%52;
-    var line = Math.floor(start/52);
-    for(var i = 0; i<duration; i++){
-        x++;
-    if(x> 52){
-        line++;
-        x =0
-    }
-        $("#"+x+"-"+line).css("fill",color);
-        console.log("#"+x+"-"+line);
-    }
+function fillPath(startWeek,startYear,endWeek,endYear,color){
+    vis.selectAll(".weekCircle")
+        .map(d => d[0])
+        .filter(d => (d[0].id.split("-")[0]>= startWeek && d[0].id.split("-")[1]>= startYear) && (d[0].id.split("-")[0]<= endWeek && d[0].id.split("-")[1]<= endYear))
+        .style("fill", color);
 }
     
 </script>
