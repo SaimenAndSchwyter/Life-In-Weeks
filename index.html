@@ -36,6 +36,7 @@
 <svg width="700" height="1200"></svg>
 
 <script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <script>
 
   const margin = {top: 50, right: 50, bottom: 50, left: 50};
@@ -101,7 +102,20 @@
       .attr("stroke", "black");     // display outline
 
   // -- ▲ DELETE UNTIL HERE ▲ --
-
+function fillPath(start, duration,color){
+    var x=start%52;
+    var line = Math.floor(start/52);
+    for(var i = 0; i<duration; i++){
+        x++;
+    if(x> 52){
+        line++;
+        x =0
+    }
+        $("#"+x+"-"+line).css("fill",color);
+        console.log("#"+x+"-"+line);
+    }
+}
+    
 </script>
 
 </body>
