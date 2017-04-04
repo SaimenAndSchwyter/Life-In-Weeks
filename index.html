@@ -103,13 +103,23 @@
 
     
   // -- ▲ DELETE UNTIL HERE ▲ --
-function fillPath(startWeek,startYear,endWeek,endYear,color){
+function fillPath(startWeek,startYear,endWeek,endYear,color){    
     vis.selectAll(".weekCircle")
-        .map(d => d[0])
-        .filter(d => (d[0].id.split("-")[0]>= startWeek && d[0].id.split("-")[1]>= startYear) && (d[0].id.split("-")[0]<= endWeek && d[0].id.split("-")[1]<= endYear))
-        .style("fill", color);
-}
+        .filter(d => (d[1] >= startWeek && startYear == d[0])
+                || (d[0]> startYear && d[0] < endYear)
+                ||(d[0] == endYear && d[1]<= endWeek)
+               )
+        .style("fill", color);}
     
+    /*
+    vis.selectAll(".weekCircle")
+        .filter(d => ( d[1]>= startWeek &&d[0]>= startYear ) && ( d[1]<= endWeek && d[0]<= endYear))
+        .style("fill", color);}/*
+    
+    
+    /*vis.selectAll(".weekCircle")
+        .filter(d => ( Number(d[0]+""+d[1])>= Number(startYear +""+startWeek) ) && ( Number(d[0]+""+d[1])<= Number(endYear +""+endWeek)))
+        .style("fill", color);}*/
 </script>
 
 </body>
