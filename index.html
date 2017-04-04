@@ -27,7 +27,17 @@
             font-size: x-large;
             font-weight: bolder;
         }
-
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 12px;
+  padding: 8px;
+  margin-top: -20px;
+  font: 10px sans-serif;
+  background: #ddd;
+  pointer-events: none;
+}
     </style>
 </head>
 <body>
@@ -103,13 +113,36 @@
 
     
   // -- ▲ DELETE UNTIL HERE ▲ --
-function fillPath(startWeek,startYear,endWeek,endYear,color){    
+function fillPath(startWeek,startYear,endWeek,endYear,color, tip){    
     vis.selectAll(".weekCircle")
         .filter(d => (d[1] >= startWeek && startYear == d[0])
                 || (d[0]> startYear && d[0] < endYear)
                 ||(d[0] == endYear && d[1]<= endWeek)
                )
-        .style("fill", color);}
+        .style("fill", color)
+        .attr('data-tip',tip)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseout", mouseout);
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("display", "none");
+
+function mouseover() {
+  div.style("display", "inline");
+}
+
+function mousemove() {
+  div
+      .text(this.getAttribute('data-tip'))
+      .style("left", (d3.event.pageX - 34) + "px")
+      .style("top", (d3.event.pageY - 12) + "px");
+}
+
+function mouseout() {
+  div.style("display", "none");
+}}
     
     /*
     vis.selectAll(".weekCircle")
