@@ -12,9 +12,8 @@
             font: 10px sans-serif;
         }
 
-        h2 {
+        h1 {
             margin-top: 0;
-            color: grey;
         }
 
         /*----------------------------
@@ -24,39 +23,31 @@
             background-color: transparent;
         }
 
-        .content {
-            fill: lightsteelblue;
-        }
-
-        .label {
-            fill: white;
-            font-size: x-large;
-            font-weight: bolder;
-        }
-
         .tooltip {
             position: absolute;
             text-align: center;
-            width: 60px;
-            height: 12px;
+            width: 7rem;
+            height: 0.9rem;
             padding: 8px;
-            margin-top: -20px;
-            font: 10px sans-serif;
-            background: #ddd;
+            margin-top: -2rem;
+            font: 0.9rem sans-serif;
+            border: 2px solid;
+            border-radius: 5px;
+            background: white;
             pointer-events: none;
         }
+
     </style>
 </head>
 <body>
 
-<h2>A scaffold for simple visualizations</h2>
+<h1>Life in Weeks</h1>
 <svg width="700" height="1200"></svg>
 
 <script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <script>
 
-    const margin = {top: 50, right: 50, bottom: 50, left: 50};
+    const margin = {top: 30, right: 30, bottom: 30, left: 30};
 
     const svg = d3.select("svg");
     const width = +svg.attr("width") - margin.left - margin.right;
@@ -118,48 +109,51 @@
         .attr("fill", "none")         // remove filling
         .attr("stroke", "black");     // display outline
 
-    
     /*Fill circles with a color
-    @Params (int,int,int,int,string,string)
-    param 1: week where drawing starts
-    param 2: year where drawing starts
-    param 3: week where drawing ends
-    param 4: year where drawing ends
-    param 5: Color of the circles
-    param 6: Tooltip text
-    */
+     @Params (int,int,int,int,string,string)
+     param 1: week where drawing starts
+     param 2: year where drawing starts
+     param 3: week where drawing ends
+     param 4: year where drawing ends
+     param 5: Color of the circles
+     param 6: Tooltip text
+     */
     function fillPath(startWeek, startYear, endWeek, endYear, color, tip) {
         vis.selectAll(".weekCircle")
             .filter(d => (d[1] >= startWeek && startYear == d[0])
                 || (d[0] > startYear && d[0] < endYear)
                 || (d[0] == endYear && d[1] <= endWeek)
             )
-            .style("fill", color)
+            .attr("fill", color)
             .attr('data-tip', tip)
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseout", mouseout);
     }
-    /*Template of the tooltip*/        
+
+    /*Template of the tooltip*/
     var div = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("display", "none");
-    
+        .attr("class", "tooltip")
+        .style("display", "none");
+
     /*Display tooltip on over*/
-        function mouseover() {
-            div.style("display", "inline");
-        }
+    function mouseover() {
+        div.style("display", "inline");
+    }
+
     /*Move tooltip to the cursor position*/
-        function mousemove() {
-            div
-                .text(this.getAttribute('data-tip'))
-                .style("left", (d3.event.pageX - 34) + "px")
-                .style("top", (d3.event.pageY - 12) + "px");
-        }
+    function mousemove() {
+        div
+            .text(this.getAttribute('data-tip'))
+            .style("left", (d3.event.pageX - 34) + "px")
+            .style("top", (d3.event.pageY - 12) + "px")
+            .style("border-color", this.getAttribute('fill'));
+    }
+
     /*Hide tooltip on mouseout*/
-        function mouseout() {
-            div.style("display", "none");
-        }
+    function mouseout() {
+        div.style("display", "none");
+    }
 
     // -- ▲ DELETE UNTIL HERE ▲ --
 </script>
