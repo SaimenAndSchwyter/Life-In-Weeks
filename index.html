@@ -5,6 +5,9 @@
     <title>Simple Template</title>
     <style>
 
+        /*------------------------------
+        ________Gerneral Styling________
+        ______________________________*/
         body {
             font: 10px sans-serif;
         }
@@ -14,6 +17,9 @@
             color: grey;
         }
 
+        /*----------------------------
+        ________Chart Styling_________
+        ______________________________*/
         svg {
             background-color: transparent;
         }
@@ -112,6 +118,16 @@
         .attr("fill", "none")         // remove filling
         .attr("stroke", "black");     // display outline
 
+    
+    /*Fill circles with a color
+    @Params (int,int,int,int,string,string)
+    param 1: week where drawing starts
+    param 2: year where drawing starts
+    param 3: week where drawing ends
+    param 4: year where drawing ends
+    param 5: Color of the circles
+    param 6: Tooltip text
+    */
     function fillPath(startWeek, startYear, endWeek, endYear, color, tip) {
         vis.selectAll(".weekCircle")
             .filter(d => (d[1] >= startWeek && startYear == d[0])
@@ -123,26 +139,27 @@
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseout", mouseout);
-
-        var div = d3.select("body").append("div")
+    }
+    /*Template of the tooltip*/        
+    var div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("display", "none");
-
+    
+    /*Display tooltip on over*/
         function mouseover() {
             div.style("display", "inline");
         }
-
+    /*Move tooltip to the cursor position*/
         function mousemove() {
             div
                 .text(this.getAttribute('data-tip'))
                 .style("left", (d3.event.pageX - 34) + "px")
                 .style("top", (d3.event.pageY - 12) + "px");
         }
-
+    /*Hide tooltip on mouseout*/
         function mouseout() {
             div.style("display", "none");
         }
-    }
 
     // -- ▲ DELETE UNTIL HERE ▲ --
 </script>
