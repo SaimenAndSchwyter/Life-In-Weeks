@@ -72,7 +72,7 @@
     const cross = d3.cross(years, weeks);
 
     // make ticks on the x axis go from 1 to 52, while having a tick at 1, then 5, 10 etc.
-    const xTicks = d3.range(0, 53, 5);
+    const xTicks = d3.range(0, 53, 4);
     xTicks[0] = 1;
 
     // x Axis/Scale
@@ -155,14 +155,14 @@
         div.style("display", "none");
     }
 
-    
-    
-//Init
+    //Init
     fillPath(25,4,24,6,"#70FF13","Kindergarten")
     fillPath(25,6,24,11,"#08FFF1","Primarschule");
     fillPath(25,11,24,15,"#0576FF","Oberstufe");
     fillPath(25,15,24,19,"#CE1F00","Lehre");
     fillPath(25,19,24,23,"#FF8A00","Studium");
+
+    // -- ▲ DELETE UNTIL HERE ▲ --
 </script>
 
 </body>
