@@ -27,17 +27,18 @@
             font-size: x-large;
             font-weight: bolder;
         }
-.tooltip {
-  position: absolute;
-  text-align: center;
-  width: 60px;
-  height: 12px;
-  padding: 8px;
-  margin-top: -20px;
-  font: 10px sans-serif;
-  background: #ddd;
-  pointer-events: none;
-}
+
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: 60px;
+            height: 12px;
+            padding: 8px;
+            margin-top: -20px;
+            font: 10px sans-serif;
+            background: #ddd;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -49,110 +50,101 @@
 <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <script>
 
-  const margin = {top: 50, right: 50, bottom: 50, left: 50};
+    const margin = {top: 50, right: 50, bottom: 50, left: 50};
 
-  const svg = d3.select("svg");
-  const width = +svg.attr("width") - margin.left - margin.right;
-  const height = +svg.attr("height") - margin.top - margin.bottom;
+    const svg = d3.select("svg");
+    const width = +svg.attr("width") - margin.left - margin.right;
+    const height = +svg.attr("height") - margin.top - margin.bottom;
 
-  // content area of your visualization (note: g elements do NOT have dimensions)
-  const vis = svg.append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    // content area of your visualization (note: g elements do NOT have dimensions)
+    const vis = svg.append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // Everything below is for illustration purposes
-  // delete it and replace it with your own visualization (by appending to `vis`)
+    // Everything below is for illustration purposes
+    // delete it and replace it with your own visualization (by appending to `vis`)
 
-  // -- ▼ DELETE FROM HERE ▼ --
+    // -- ▼ DELETE FROM HERE ▼ --
 
-  /* array with:
-  weeks (1 - 52 inclusive)
-  years (0 - 90 inclusive)
-  cross product in the form of: [0,1], [0,2] ... [0,52], [1, 1], [1, 2], ... [1,52] etc.
-  */
-  const weeks = d3.range(1,53);
-  const years = d3.range(0,91);
-  const cross = d3.cross(years,weeks);
+    /* array with:
+     weeks (1 - 52 inclusive)
+     years (0 - 90 inclusive)
+     cross product in the form of: [0,1], [0,2] ... [0,52], [1, 1], [1, 2], ... [1,52] etc.
+     */
+    const weeks = d3.range(1, 53);
+    const years = d3.range(0, 91);
+    const cross = d3.cross(years, weeks);
 
-  // make ticks on the x axis go from 1 to 52, while having a tick at 1, then 5, 10 etc.
-  const xTicks = d3.range(0,53,5);
-  xTicks[0] = 1;
+    // make ticks on the x axis go from 1 to 52, while having a tick at 1, then 5, 10 etc.
+    const xTicks = d3.range(0, 53, 5);
+    xTicks[0] = 1;
 
-  // x Axis/Scale
-  const xScale = d3.scaleLinear()
-      .domain([1, 52])
-      .range([0, width]);
-    d3.range(1,53,5)
-  const xAxis = d3.axisTop(xScale)
-      .tickValues(xTicks);
-  vis.append("g")
-      .call(xAxis)
-      .attr("transform", "translate(0,-10)");
+    // x Axis/Scale
+    const xScale = d3.scaleLinear()
+        .domain([1, 52])
+        .range([0, width]);
+    d3.range(1, 53, 5)
+    const xAxis = d3.axisTop(xScale)
+        .tickValues(xTicks);
+    vis.append("g")
+        .call(xAxis)
+        .attr("transform", "translate(0,-10)");
 
-  // y Axis/Scale
-  const yScale = d3.scaleLinear()
-      .domain([0, 90])
-      .range([0, height]);
-  const yAxis = d3.axisLeft(yScale)
-      .ticks(90/5);
-  vis.append("g")
-      .call(yAxis)
-      .attr("transform", "translate(-10,0)");
+    // y Axis/Scale
+    const yScale = d3.scaleLinear()
+        .domain([0, 90])
+        .range([0, height]);
+    const yAxis = d3.axisLeft(yScale)
+        .ticks(90 / 5);
+    vis.append("g")
+        .call(yAxis)
+        .attr("transform", "translate(-10,0)");
 
-  // draw array
-  vis.selectAll(".circle")
-      .data(cross)
-      .enter()
-      .append('circle')
-      .attr("class","weekCircle")
-      .attr("id", d => d[1] + "-" + d[0]) // week - year
-      .attr("r",4)
-      .attr("cx", week => xScale(week[1]))
-      .attr("cy", year => yScale(year[0]))
-      .attr("fill", "none")         // remove filling
-      .attr("stroke", "black");     // display outline
+    // draw array
+    vis.selectAll(".circle")
+        .data(cross)
+        .enter()
+        .append('circle')
+        .attr("class", "weekCircle")
+        .attr("id", d => d[1] + "-" + d[0]) // week - year
+        .attr("r", 4)
+        .attr("cx", week => xScale(week[1]))
+        .attr("cy", year => yScale(year[0]))
+        .attr("fill", "none")         // remove filling
+        .attr("stroke", "black");     // display outline
 
-    
-  // -- ▲ DELETE UNTIL HERE ▲ --
-function fillPath(startWeek,startYear,endWeek,endYear,color, tip){    
-    vis.selectAll(".weekCircle")
-        .filter(d => (d[1] >= startWeek && startYear == d[0])
-                || (d[0]> startYear && d[0] < endYear)
-                ||(d[0] == endYear && d[1]<= endWeek)
-               )
-        .style("fill", color)
-        .attr('data-tip',tip)
-        .on("mouseover", mouseover)
-        .on("mousemove", mousemove)
-        .on("mouseout", mouseout);
+    function fillPath(startWeek, startYear, endWeek, endYear, color, tip) {
+        vis.selectAll(".weekCircle")
+            .filter(d => (d[1] >= startWeek && startYear == d[0])
+                || (d[0] > startYear && d[0] < endYear)
+                || (d[0] == endYear && d[1] <= endWeek)
+            )
+            .style("fill", color)
+            .attr('data-tip', tip)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseout", mouseout);
 
-var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("display", "none");
+        var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("display", "none");
 
-function mouseover() {
-  div.style("display", "inline");
-}
+        function mouseover() {
+            div.style("display", "inline");
+        }
 
-function mousemove() {
-  div
-      .text(this.getAttribute('data-tip'))
-      .style("left", (d3.event.pageX - 34) + "px")
-      .style("top", (d3.event.pageY - 12) + "px");
-}
+        function mousemove() {
+            div
+                .text(this.getAttribute('data-tip'))
+                .style("left", (d3.event.pageX - 34) + "px")
+                .style("top", (d3.event.pageY - 12) + "px");
+        }
 
-function mouseout() {
-  div.style("display", "none");
-}}
-    
-    /*
-    vis.selectAll(".weekCircle")
-        .filter(d => ( d[1]>= startWeek &&d[0]>= startYear ) && ( d[1]<= endWeek && d[0]<= endYear))
-        .style("fill", color);}/*
-    
-    
-    /*vis.selectAll(".weekCircle")
-        .filter(d => ( Number(d[0]+""+d[1])>= Number(startYear +""+startWeek) ) && ( Number(d[0]+""+d[1])<= Number(endYear +""+endWeek)))
-        .style("fill", color);}*/
+        function mouseout() {
+            div.style("display", "none");
+        }
+    }
+
+    // -- ▲ DELETE UNTIL HERE ▲ --
 </script>
 
 </body>
