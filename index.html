@@ -79,7 +79,6 @@
     const xScale = d3.scaleLinear()
         .domain([1, 52])
         .range([0, width]);
-    d3.range(1, 53, 5)
     const xAxis = d3.axisTop(xScale)
         .tickValues(xTicks);
     vis.append("g")
